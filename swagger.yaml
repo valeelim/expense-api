@@ -1,0 +1,237 @@
+components:
+  schemas:
+    Expense:
+      type: object
+      properties:
+        id:
+          type: string
+          example: 3f5d8771-e77a-402e-833d-66eeffaeae16
+        name:
+          type: string
+          example: Hokben Value Set
+        category:
+          type: string
+          example: Food
+        amount:
+          type: integer
+          example: 34000
+    
+tags:
+  name: Expenses
+  description: Manages expenses
+
+paths:
+  /expense:
+    get:
+      summary: Get all expenses
+      tags: [Expenses]
+      responses:
+        200:
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Expense"
+      parameters:
+        - name: category
+          in: query
+          schema:
+            type: string
+        - name: min_price
+          in: query
+          schema:
+            type: integer
+        - name: max_price
+          in: query
+          schema:
+            type: integer
+    post:
+      summary: Create a new expense
+      tags: [Expenses]
+      requestBody:
+        required: true
+        content: 
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  example: Hokben Value Set
+                category:
+                  type: string
+                  example: 0c1dab86-8538-498f-af58-17b54de01d3d
+                amount:
+                  type: integer
+                  example: 34000
+      responses:
+        200:
+          content:
+            application/json:
+              schema:
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                      example: 3f5d8771-e77a-402e-833d-66eeffaeae16
+                    name:
+                      type: string
+                      example: Hokben Value Set
+                    category:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                          example: fa8337a7-a4b7-4257-a322-9d51473d9fc4
+                        name:
+                          type: string
+                          example: Food
+                    amount:
+                      type: integer
+                      example: 34000
+  /expense/category:
+    get:
+      summary: Get all categories
+      tags: [Expenses]
+      responses:
+        200:
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id: 
+                      type: string
+                      example: 0c1dab86-8538-498f-af58-17b54de01d3d
+                    name:
+                      type: string
+                      example: Food
+  /expense/total:
+    get:
+      summary: Get total sum of expenses
+      tags: [Expenses]
+      responses:
+        200:
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  total_expenses:
+                    type: integer
+                    example: 34000
+  /expense/{id}:
+    get:
+      summary: Get expense by id
+      tags: [Expenses]
+      parameters:
+        - name: id
+          in: path
+          description: Expenses ID
+          schema: 
+            type: string
+            format: UUID
+          required: true
+      responses:
+        200:
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    example: 3f5d8771-e77a-402e-833d-66eeffaeae16
+                  name:
+                    type: string
+                    example: Party
+                  category:
+                    type: object
+                    properties:
+                      id: 
+                        type: string
+                        example: fa8337a7-a4b7-4257-a322-9d51473d9fc4
+                      name:
+                        type: string
+                        example: Personal Expenses
+                  amount:
+                    type: string
+                    example: 20000
+    delete:
+      summary: Delete expense by id
+      tags: [Expenses]
+      parameters:
+        - name: id
+          in: path
+          description: Expenses ID
+          schema: 
+            type: string
+            format: UUID
+          required: true
+      responses:
+        200:
+          content:
+            text/plain:
+              schema:
+                type: string
+                example: Success delete expense with id fa8337a7-a4b7-4257-a322-9d51473d9fc3
+    put:
+      summary: Update expense by id
+      tags: [Expenses]
+      parameters:
+        - name: id
+          in: path
+          description: Expenses ID
+          schema: 
+            type: string
+            format: UUID
+          required: true
+      requestBody:
+        required: true
+        content: 
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  example: Hokben Value Set
+                category:
+                  type: string
+                  example: 0c1dab86-8538-498f-af58-17b54de01d3d
+                amount:
+                  type: integer
+                  example: 34000
+      responses:
+        200:
+          content:
+            application/json:
+              schema: 
+                type: object
+                properties:
+                  id:
+                    type: string
+                    example: 3f5d8771-e77a-402e-833d-66eeffaeae16
+                  name:
+                    type: string
+                    example: Party
+                  category:
+                    type: object
+                    properties:
+                      id: 
+                        type: string
+                        example: fa8337a7-a4b7-4257-a322-9d51473d9fc4
+                      name:
+                        type: string
+                        example: Personal Expenses
+                  amount:
+                    type: integer
+                    example: 20000
+
+
+
+
